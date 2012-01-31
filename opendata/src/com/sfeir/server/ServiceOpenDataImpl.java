@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.sfeir.client.ServiceOpenData;
+import com.sfeir.server.dao.DepartDao;
 import com.sfeir.server.dao.RegionDao;
 import com.sfeir.shared.Depart;
 import com.sfeir.shared.Region;
@@ -34,11 +35,11 @@ public class ServiceOpenDataImpl extends RemoteServiceServlet implements Service
 
 	@Override
 	public List<Depart> getAllDepart(Long idRegion) throws IllegalArgumentException {
-		// TODO Auto-generated method stub
-		Depart depart = new Depart();
-		depart.setId(2l);
-		depart.setName("Un departement");
-		return Arrays.asList(depart);
+		try {
+			return new DepartDao().getAll("name");
+		} catch (EntityNotFoundException e) {
+			throw new RuntimeException("impossible de recuperer la liste des departements pour la region:" + idRegion, e);
+		} 
 	}
 	
 	

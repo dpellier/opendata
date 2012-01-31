@@ -11,6 +11,12 @@ public class Depart implements Serializable {
 	private Long id;
 	private String name;
 	
+	public Depart() {}
+	
+	public Depart( String name) {
+		this.name = name;
+	}
+	
 	public Long getId() {
 		return id;
 	}
