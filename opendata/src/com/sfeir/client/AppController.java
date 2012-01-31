@@ -5,6 +5,8 @@ import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.History;
 import com.google.gwt.user.client.ui.HasWidgets;
+import com.sfeir.client.event.BreadcrumbClickEvent;
+import com.sfeir.client.event.BreadcrumbClickEventHandler;
 import com.sfeir.client.event.RegionClickEvent;
 import com.sfeir.client.event.RegionClickEventHandler;
 import com.sfeir.client.presenter.DepartPresenter;
@@ -29,16 +31,37 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 	private void bind() {
 		History.addValueChangeHandler(this);
 		eventBus.addHandler(RegionClickEvent.TYPE,
-		        new RegionClickEventHandler() {
-		          public void onRegionClick(RegionClickEvent event) {
-		            doShowDepart(event.getId());
-		          }
-		        });  
+				new RegionClickEventHandler() {
+					public void onRegionClick(RegionClickEvent event) {
+						doShowDepart(event.getId());
+					}
+				});
+		eventBus.addHandler(BreadcrumbClickEvent.TYPE,
+				new BreadcrumbClickEventHandler() {
+
+					@Override
+					public void onRegionClick(BreadcrumbClickEvent event) {
+						doShowRegion();
+					}
+
+					@Override
+					public void onDepartClick(BreadcrumbClickEvent event) {
+						// TODO Auto-generated method stub
+					}
+				});
 	}
-	
+
 	private void doShowDepart(Long id) {
 		History.newItem("region_" + id);
-		Presenter presenter = new DepartPresenter(id, rpcService, eventBus, new DepartView());
+		Presenter presenter = new DepartPresenter(id, rpcService, eventBus,
+				new DepartView());
+		presenter.go(container);
+	}
+
+	private void doShowRegion() {
+		History.newItem("region");
+		Presenter presenter = new RegionPresenter(rpcService, eventBus,
+				new RegionView());
 		presenter.go(container);
 	}
 
@@ -65,10 +88,11 @@ public class AppController implements Presenter, ValueChangeHandler<String> {
 			if (token.equals("region")) {
 				presenter = new RegionPresenter(rpcService, eventBus,
 						new RegionView());
-			}
-			else if (token.startsWith("region_")) {
-				Long idRegion = Long.parseLong(token.substring(token.indexOf('_') + 1, token.length()));
-				presenter = new DepartPresenter(idRegion, rpcService, eventBus, new DepartView());
+			} else if (token.startsWith("region_")) {
+				Long idRegion = Long.parseLong(token.substring(
+						token.indexOf('_') + 1, token.length()));
+				presenter = new DepartPresenter(idRegion, rpcService, eventBus,
+						new DepartView());
 			}
 
 			if (presenter != null) {

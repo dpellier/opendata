@@ -4,21 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.HasWidgets;
 import com.google.gwt.user.client.ui.Widget;
 import com.sfeir.client.ServiceOpenDataAsync;
-import com.sfeir.client.presenter.RegionPresenter.RegionDisplay;
+import com.sfeir.client.event.BreadcrumbClickEvent;
 import com.sfeir.shared.Depart;
-import com.sfeir.shared.Region;
 
 public class DepartPresenter implements Presenter {
 	public static interface DepartDisplay {
 		void setAllDepart(List<String> depart);
+
 		HasClickHandlers getList();
+
+		HasClickHandlers getLienRegion();
+
 		int getClickedRow(ClickEvent event);
+
 		Widget asWidget();
 	}
 
@@ -27,8 +32,7 @@ public class DepartPresenter implements Presenter {
 	private final DepartDisplay display;
 	private List<Depart> departs = new ArrayList<Depart>();
 	private Long idRegion;
-	
-	
+
 	public DepartPresenter(Long idRegion, ServiceOpenDataAsync rpcService,
 			HandlerManager eventBus, DepartDisplay view) {
 		this.idRegion = idRegion;
@@ -36,17 +40,28 @@ public class DepartPresenter implements Presenter {
 		this.eventBus = eventBus;
 		this.display = view;
 	}
-	
+
 	public void go(final HasWidgets container) {
-	    //bind();
-	    container.clear();
-	    container.add(display.asWidget());
-	    fetchAllDepart();
-	  }
-	
+		bind();
+		container.clear();
+		container.add(display.asWidget());
+		fetchAllDepart();
+	}
+
+	private void bind() {
+		display.getLienRegion().addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(ClickEvent event) {
+				eventBus.fireEvent(new BreadcrumbClickEvent());
+			}
+		});
+
+	}
+
 	private void fetchAllDepart() {
 		rpcService.getAllDepart(idRegion, new AsyncCallback<List<Depart>>() {
-			
+
 			@Override
 			public void onSuccess(List<Depart> result) {
 				departs = result;
@@ -56,11 +71,11 @@ public class DepartPresenter implements Presenter {
 				}
 				display.setAllDepart(names);
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO a finir
 			}
 		});
-}
+	}
 }

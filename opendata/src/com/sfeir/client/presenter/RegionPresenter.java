@@ -18,8 +18,11 @@ public class RegionPresenter implements Presenter {
 
 	public static interface RegionDisplay {
 		void setAllRegion(List<String> region);
+
 		HasClickHandlers getList();
+
 		int getClickedRow(ClickEvent event);
+
 		Widget asWidget();
 	}
 
@@ -34,30 +37,30 @@ public class RegionPresenter implements Presenter {
 		this.eventBus = eventBus;
 		this.display = view;
 	}
-	
+
 	public void go(final HasWidgets container) {
-	    bind();
-	    container.clear();
-	    container.add(display.asWidget());
-	    fetchAllRegion();
-	  }
-	
+		bind();
+		container.clear();
+		container.add(display.asWidget());
+		fetchAllRegion();
+	}
+
 	private void bind() {
 		display.getList().addClickHandler(new ClickHandler() {
-		      public void onClick(ClickEvent event) {
-		        int selectedRow = display.getClickedRow(event);
-		        
-		        if (selectedRow >= 0) {
-		          Long id = regions.get(selectedRow).getId();
-		          eventBus.fireEvent(new RegionClickEvent(id));
-		        }
-		      }
-		    });
+			public void onClick(ClickEvent event) {
+				int selectedRow = display.getClickedRow(event);
+
+				if (selectedRow >= 0) {
+					Long id = regions.get(selectedRow).getId();
+					eventBus.fireEvent(new RegionClickEvent(id));
+				}
+			}
+		});
 	}
 
 	private void fetchAllRegion() {
 		rpcService.getAllRegion(new AsyncCallback<List<Region>>() {
-			
+
 			@Override
 			public void onSuccess(List<Region> result) {
 				regions = result;
@@ -67,11 +70,11 @@ public class RegionPresenter implements Presenter {
 				}
 				display.setAllRegion(names);
 			}
-			
+
 			@Override
 			public void onFailure(Throwable caught) {
 				// TODO a finir
 			}
 		});
-}
+	}
 }
