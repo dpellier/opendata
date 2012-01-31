@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:gwt="urn:import:com.google.gwt.user.client.ui">
-	<gwt:DockLayoutPanel pixelSize="500,200" unit="EM" >
-		<gwt:north size="3">
-			<gwt:HTMLPanel>
-				<ul class="breadcrumb">
-					<li class="active">Region</li>
-				</ul>
-			</gwt:HTMLPanel>
-		</gwt:north>
-		<gwt:south size="10">
-			<gwt:ScrollPanel>
-				<gwt:FlexTable ui:field="regions"/>
-			</gwt:ScrollPanel>
-		</gwt:south>
-	</gwt:DockLayoutPanel>
+	
+		<gwt:HTMLPanel>
+			      <div class="topbar-inner">
+			        <div class="container">
+			        	<h3><span style="color:white">Open-data</span></h3>
+			        </div>
+			  </div>
+			  <div class="container marge">
+				  <div>
+				 	 <ul class="breadcrumb">
+						<li class="active">Region</li>
+					</ul>
+				  </div>
+				  <div>
+					 <gwt:ScrollPanel>
+						<gwt:FlexTable ui:field="regions"/>
+					</gwt:ScrollPanel>
+				  </div>
+			  </div>
+		</gwt:HTMLPanel>
+		
 </ui:UiBinder>

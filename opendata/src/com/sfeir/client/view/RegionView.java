@@ -11,6 +11,7 @@ import com.google.gwt.uibinder.client.UiTemplate;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.google.gwt.user.client.ui.Widget;
 import com.sfeir.client.presenter.RegionPresenter;
@@ -35,7 +36,9 @@ public class RegionView extends Composite implements
 	public void setAllRegion(List<String> regionList) {
 		regions.removeAllRows();
 		for (int index = 0; index < regionList.size(); index++) {
-			regions.setText(index, 1, regionList.get(index));
+			Label label = new Label(regionList.get(index));
+			label.setStyleName("pointer");
+			regions.setWidget(index, 1, label);
 		}
 	}
 
