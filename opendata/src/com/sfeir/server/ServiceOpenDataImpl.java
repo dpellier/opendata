@@ -1,11 +1,13 @@
 package com.sfeir.server;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.sfeir.client.ServiceOpenData;
-import com.sfeir.server.dao.Region;
 import com.sfeir.server.dao.RegionDao;
+import com.sfeir.shared.Depart;
+import com.sfeir.shared.Region;
 import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -17,11 +19,11 @@ public class ServiceOpenDataImpl extends RemoteServiceServlet implements Service
 	
 	private final RegionDao regionDao = new RegionDao();
 	
-	public List<String> getAllRegion() {
-		List<String> res = new ArrayList<String>();
+	public List<Region> getAllRegion() {
+		List<Region> res = new ArrayList<Region>();
 		try {
 			for (Region reg : regionDao.getAll("name")) {
-				res.add(reg.getName());
+				res.add(reg);
 			}
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
@@ -29,9 +31,15 @@ public class ServiceOpenDataImpl extends RemoteServiceServlet implements Service
 		
 		return res;
 	}
-	
-	public Void initAllData() {
-		regionDao.initData();
-		return null;
+
+	@Override
+	public List<Depart> getAllDepart(Long idRegion) throws IllegalArgumentException {
+		// TODO Auto-generated method stub
+		Depart depart = new Depart();
+		depart.setId(2l);
+		depart.setName("Un departement");
+		return Arrays.asList(depart);
 	}
+	
+	
 }

@@ -1,6 +1,7 @@
 package com.sfeir.server.dao;
 
 import com.googlecode.objectify.ObjectifyService;
+import com.sfeir.shared.Region;
 
 public class RegionDao extends GenericDao<Region> {
 	

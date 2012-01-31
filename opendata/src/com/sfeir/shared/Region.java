@@ -1,8 +1,11 @@
-package com.sfeir.server.dao;
+package com.sfeir.shared;
+
+import java.io.Serializable;
 
 import javax.persistence.Id;
 
-public class Region {
+@SuppressWarnings("serial")
+public class Region implements Serializable {
 	
 	@Id
 	private Long id;
