@@ -2,56 +2,16 @@ package com.sfeir.client.view;
 
 import java.util.List;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.HasClickHandlers;
-import com.google.gwt.uibinder.client.UiBinder;
-import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.FlexTable;
-import com.google.gwt.user.client.ui.HTMLTable.Cell;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.Widget;
-import com.sfeir.client.presenter.RegionPresenter;
+import com.google.gwt.user.client.ui.IsWidget;
+import com.sfeir.client.activity.Presenter;
+import com.sfeir.shared.Region;
 
-public class RegionView extends Composite implements
-		RegionPresenter.RegionDisplay {
+public interface RegionView extends IsWidget {
 
-	@UiTemplate("Region.ui.xml")
-	interface MyUiBinder extends UiBinder<Panel, RegionView> {
-	};
-
-	private static final MyUiBinder binder = GWT.create(MyUiBinder.class);
-
-	@UiField
-	FlexTable regions = new FlexTable();
-
-	public RegionView() {
-		initWidget(binder.createAndBindUi(this));
-	}
-
-	@Override
-	public void setAllRegion(List<String> regionList) {
-		regions.removeAllRows();
-		for (int index = 0; index < regionList.size(); index++) {
-			Label label = new Label(regionList.get(index));
-			label.setStyleName("pointer");
-			regions.setWidget(index, 1, label);
-		}
-	}
-
-	public int getClickedRow(ClickEvent event) {
-		Cell row = regions.getCellForEvent(event);
-		return row.getCellIndex();
-	}
-
-	public HasClickHandlers getList() {
-		return regions;
-	}
-
-	public Widget asWidget() {
-		return this;
-	}
+	void setAllRegion(List<Region> region);
+	HasClickHandlers getList();
+	int getClickedRow(ClickEvent event);
+	void setPresenter(Presenter presenter);
 }

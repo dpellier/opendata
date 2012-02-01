@@ -16,7 +16,7 @@
 				  </div>
 				  <div>
 					 <gwt:ScrollPanel>
-						<gwt:FlexTable ui:field="regions"/>
+						<gwt:FlexTable styleName="bordered-table zebra-striped" ui:field="regions"/>
 					</gwt:ScrollPanel>
 				  </div>
 			  </div>
