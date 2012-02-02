@@ -8,6 +8,8 @@ import com.sfeir.client.view.DepartView;
 import com.sfeir.client.view.DepartViewImpl;
 import com.sfeir.client.view.RegionView;
 import com.sfeir.client.view.RegionViewImpl;
+import com.sfeir.client.view.VilleView;
+import com.sfeir.client.view.VilleViewImpl;
 
 public class ClientFactoryImpl implements ClientFactory {
 
@@ -15,6 +17,7 @@ public class ClientFactoryImpl implements ClientFactory {
 	private static final PlaceController placeController = new PlaceController(eventBus);
 	private static final RegionView regionView = new RegionViewImpl();
 	private static final DepartView departView = new DepartViewImpl();
+	private static final VilleView villeView = new VilleViewImpl();
 	private static final ServiceOpenDataAsync rpcService = GWT.create(ServiceOpenData.class);
 	
 	@Override
@@ -41,6 +44,11 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public ServiceOpenDataAsync getRpcService() {
 		return rpcService;
+	}
+	
+	@Override
+	public VilleView getVilleView() {
+		return villeView;
 	}
 
 	

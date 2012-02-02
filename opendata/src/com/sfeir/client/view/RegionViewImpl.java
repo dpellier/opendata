@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -14,7 +13,6 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
-import com.google.gwt.user.client.ui.Widget;
 import com.sfeir.client.activity.Presenter;
 import com.sfeir.client.place.DepartPlace;
 import com.sfeir.shared.Region;
@@ -53,20 +51,12 @@ public class RegionViewImpl extends Composite implements
 	void onClickRegion(ClickEvent e)
 	{
 		Region region = regionList.get(getClickedRow(e));
-		listener.goTo(new DepartPlace(region.getId().toString()));
+		listener.goTo(new DepartPlace(region.getId()));
 	}
 	
 	public int getClickedRow(ClickEvent event) {
 		Cell row = regions.getCellForEvent(event);
-		return row.getCellIndex();
-	}
-
-	public HasClickHandlers getList() {
-		return regions;
-	}
-
-	public Widget asWidget() {
-		return this;
+		return row.getRowIndex();
 	}
 
 	public void setPresenter(Presenter presenter) {

@@ -10,6 +10,13 @@ public class DepartPlace extends Place {
 		this.idRegion = idRegion;
 	}
 	
+	public boolean validate() {
+		if (this.idRegion != null && !this.idRegion.equals("")) {
+			return true;
+		}
+		return false;
+	}
+	
 	public static class Tokenizer implements com.google.gwt.place.shared.PlaceTokenizer<DepartPlace>
 	{
 

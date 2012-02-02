@@ -8,32 +8,28 @@ import javax.persistence.Id;
 public class Region implements Serializable {
 	
 	@Id
-	private Long id;
+	private String id;
 	private String name;
-	private String[] departement;
 	
 	public Region() {
 	}
 
-	public Region(String name) {
-		this.name = name;
-	}
 	
-	public Region(String name, String[] departement) {
+	public Region(String id, String name) {
+		this.id = id;
 		this.name = name;
-		this.departement = departement;
 	}
 	
 	/**
 	 * @return the id
 	 */
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 	/**
 	 * @param id the id to set
 	 */
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	/**
@@ -49,17 +45,4 @@ public class Region implements Serializable {
 		this.name = name;
 	}
 
-	/**
-	 * @return the departement
-	 */
-	public String[] getDepartement() {
-		return departement;
-	}
-
-	/**
-	 * @param departement the departement to set
-	 */
-	public void setDepartement(String[] departement) {
-		this.departement = departement;
-	}
 }

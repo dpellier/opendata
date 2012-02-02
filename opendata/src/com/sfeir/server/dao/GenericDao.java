@@ -40,4 +40,9 @@ public class GenericDao<T> extends DAOBase {
 		List<T> obj = ofy().query(this.clazz).order(orderField).list();
 		return obj;
 	}
+	
+	public List<T> getAllById(String orderField, String filterField, String id) throws EntityNotFoundException {
+		List<T> res = ofy().query(this.clazz).filter(filterField, id).order(orderField).list();
+		return res;
+	}
 }

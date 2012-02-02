@@ -8,19 +8,22 @@ import javax.persistence.Id;
 public class Depart implements Serializable {
 
 	@Id
-	private Long id;
+	private String id;
+	private String regionId;
 	private String name;
 	
 	public Depart() {}
 	
-	public Depart( String name) {
+	public Depart( String id, String name, String regionid) {
+		this.id = id;
 		this.name = name;
+		this.regionId = regionid;
 	}
 	
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getName() {
@@ -28,6 +31,14 @@ public class Depart implements Serializable {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getRegionId() {
+		return regionId;
+	}
+
+	public void setRegionId(String regionId) {
+		this.regionId = regionId;
 	}
 	
 }

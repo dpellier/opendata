@@ -5,11 +5,13 @@ import java.util.List;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.user.client.ui.IsWidget;
 import com.sfeir.client.activity.Presenter;
-import com.sfeir.shared.Region;
+import com.sfeir.shared.Ville;
 
-public interface RegionView extends IsWidget {
+public interface VilleView extends IsWidget {
 
-	void setAllRegion(List<Region> region);
-	int getClickedRow(ClickEvent event);
+	void setAllVille(List<Ville> depart, String idRegion);
 	void setPresenter(Presenter presenter);
+	int getClickedRow(ClickEvent event);
+	void clearRows();
+
 }

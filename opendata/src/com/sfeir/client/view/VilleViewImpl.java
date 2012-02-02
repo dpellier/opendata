@@ -17,37 +17,39 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.sfeir.client.activity.Presenter;
 import com.sfeir.client.place.BasicPlace;
-import com.sfeir.client.place.VillePlace;
-import com.sfeir.shared.Depart;
+import com.sfeir.client.place.DepartPlace;
+import com.sfeir.shared.Ville;
 
-public class DepartViewImpl extends Composite implements DepartView {
+public class VilleViewImpl extends Composite implements VilleView {
 
-	@UiTemplate("Depart.ui.xml")
-	interface MyUiBinder extends UiBinder<Panel, DepartViewImpl> {
+	@UiTemplate("Ville.ui.xml")
+	interface MyUiBinder extends UiBinder<Panel, VilleViewImpl> {
 	};
 
 	private static final MyUiBinder binder = GWT.create(MyUiBinder.class);
 
 	@UiField
-	FlexTable departements = new FlexTable();
+	FlexTable villes = new FlexTable();
 	@UiField
 	Anchor region;
+	@UiField
+	Anchor departement;
 	private Presenter listener;
 	private String idRegion;
-	private List<Depart> departs = new ArrayList<Depart>();
+	private List<Ville> listVilles = new ArrayList<Ville>();
 
-	public DepartViewImpl() {
+	public VilleViewImpl() {
 		initWidget(binder.createAndBindUi(this));
 	}
 
 	@Override
-	public void setAllDepart(List<Depart> departList, String idRegion) {
-		departs = departList;
+	public void setAllVille(List<Ville> villeList, String idRegion) {
+		listVilles = villeList;
 		this.idRegion = idRegion;
-		for (int index = 0; index < departList.size(); index++) {
-			Label label = new Label(departList.get(index).getName());
+		for (int index = 0; index < villeList.size(); index++) {
+			Label label = new Label(villeList.get(index).getName());
 			label.setStyleName("pointer");
-			departements.setWidget(index, 1, label);
+			villes.setWidget(index, 1, label);
 		}
 
 	}
@@ -57,21 +59,23 @@ public class DepartViewImpl extends Composite implements DepartView {
 		listener.goTo(new BasicPlace());
 	}
 	
-	@UiHandler("departements")
-	void onClickDepartement(ClickEvent e)
-	{
-		Depart depart = departs.get(getClickedRow(e));
-		listener.goTo(new VillePlace(depart.getId(), idRegion));
+	@UiHandler("departement")
+	void onClickDepartement(ClickEvent e) {
+		listener.goTo(new DepartPlace(idRegion));
 	}
 
 	@Override
 	public int getClickedRow(ClickEvent event) {
-		Cell row = departements.getCellForEvent(event);
+		Cell row = villes.getCellForEvent(event);
 		return row.getRowIndex();
 	}
 
 	public void setPresenter(Presenter presenter) {
 		this.listener = presenter;
+	}
+	
+	public void clearRows() {
+		villes.removeAllRows();
 	}
 
 }

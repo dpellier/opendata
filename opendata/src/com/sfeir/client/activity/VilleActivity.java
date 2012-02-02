@@ -8,18 +8,20 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.sfeir.client.ClientFactory;
-import com.sfeir.client.place.DepartPlace;
-import com.sfeir.client.view.DepartView;
-import com.sfeir.shared.Depart;
+import com.sfeir.client.place.VillePlace;
+import com.sfeir.client.view.VilleView;
+import com.sfeir.shared.Ville;
 
-public class DepartActivity extends AbstractActivity implements Presenter {
+public class VilleActivity extends AbstractActivity implements Presenter {
 	
 	private ClientFactory clientFactory;
+	private String idDepart;
 	private String idRegion;
 
 
-	public DepartActivity(DepartPlace place,ClientFactory clientFactory) {
+	public VilleActivity(VillePlace place, ClientFactory clientFactory) {
 		this.clientFactory = clientFactory;
+		idDepart = place.getIdDepart();
 		idRegion = place.getIdRegion();
 	}
 
@@ -31,19 +33,20 @@ public class DepartActivity extends AbstractActivity implements Presenter {
 
 	@Override
 	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
-		DepartView view = clientFactory.getDepartView();
+		VilleView view = clientFactory.getVilleView();
 		view.setPresenter(this);
-		fetchAllDepart(view);
+		fetchAllVille(view);
 		containerWidget.setWidget(view.asWidget());
 	}
 	
 
-	private void fetchAllDepart(final DepartView display) {
-		clientFactory.getRpcService().getAllDepart(idRegion, new AsyncCallback<List<Depart>>() {
+	private void fetchAllVille(final VilleView display) {
+		display.clearRows();
+		clientFactory.getRpcService().getAllVille(idDepart, new AsyncCallback<List<Ville>>() {
 
 			@Override
-			public void onSuccess(List<Depart> result) {
-				display.setAllDepart(result, idRegion);
+			public void onSuccess(List<Ville> result) {
+				display.setAllVille(result, idRegion);
 			}
 
 			@Override
@@ -52,5 +55,4 @@ public class DepartActivity extends AbstractActivity implements Presenter {
 			}
 		});
 	}
-
 }

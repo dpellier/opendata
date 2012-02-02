@@ -16,12 +16,16 @@
 							<gwt:Anchor text="Region" ui:field="region" />
 							<span class="divider">/</span>
 						</li>
-						<li class="active">Departement</li>
+						<li>
+							<gwt:Anchor text="Departement" ui:field="departement" />
+							<span class="divider">/</span>
+						</li>
+						<li class="active">Ville</li>
 					</ul>
 				  </div>
 				  <div>
 					  <gwt:ScrollPanel>
-							<gwt:FlexTable styleName="bordered-table zebra-striped" ui:field="departements"/>
+							<gwt:FlexTable styleName="bordered-table zebra-striped" ui:field="villes"/>
 						</gwt:ScrollPanel>
 				  </div>
 			  </div>
@@ -29,5 +33,3 @@
 		
 
 </ui:UiBinder>
-
-
