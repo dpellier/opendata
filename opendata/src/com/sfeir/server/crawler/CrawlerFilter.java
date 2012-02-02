@@ -30,11 +30,11 @@ public class CrawlerFilter implements Filter {
 		
 		HttpServletRequest req = (HttpServletRequest) arg0; 
 		HttpServletResponse resp = (HttpServletResponse) arg1;
-		ServletOutputStream out = resp.getOutputStream();
 
 		try {
 			String queryString = req.getQueryString();
 			if ((queryString != null) && (queryString.contains(ESCAPED_FRAGMENT))) {
+				ServletOutputStream out = resp.getOutputStream();
 				WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3_6);
 				webClient.setThrowExceptionOnScriptError(false);
 				webClient.setJavaScriptEnabled(true);
@@ -43,8 +43,11 @@ public class CrawlerFilter implements Filter {
 				webClient.setTimeout(10000);
 				out.println(page.asXml());
 				webClient.closeAllWindows();
+				out.close();
 			}
-			out.close();
+			else {
+				arg2.doFilter(arg0, arg1);
+			}
 		}
 		catch(Throwable t) {
 			t.printStackTrace();
