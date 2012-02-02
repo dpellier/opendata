@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
@@ -34,16 +35,20 @@ public class CrawlerFilter implements Filter {
 		try {
 			String queryString = req.getQueryString();
 			if ((queryString != null) && (queryString.contains(ESCAPED_FRAGMENT))) {
+				
 				ServletOutputStream out = resp.getOutputStream();
 				WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3_6);
 				webClient.setThrowExceptionOnScriptError(false);
 				webClient.setJavaScriptEnabled(true);
-				String pageName = rebuildPageName(req);
+				String pageName = rewritePageName(req);
 				HtmlPage page = webClient.getPage(pageName);
-				webClient.setTimeout(10000);
+//				webClient.setTimeout(10000);
+//				webClient.waitForBackgroundJavaScript(10000);
+				webClient.setAjaxController(new NicelyResynchronizingAjaxController());
 				out.println(page.asXml());
 				webClient.closeAllWindows();
 				out.close();
+				
 			}
 			else {
 				arg2.doFilter(arg0, arg1);
@@ -55,7 +60,7 @@ public class CrawlerFilter implements Filter {
 		
 	}
 
-	private String rebuildPageName(HttpServletRequest req) throws UnsupportedEncodingException {
+	private String rewritePageName(HttpServletRequest req) throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("http://");
 		sb.append(req.getServerName());
