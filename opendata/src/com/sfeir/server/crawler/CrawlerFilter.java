@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
-import com.gargoylesoftware.htmlunit.NicelyResynchronizingAjaxController;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
@@ -43,8 +42,8 @@ public class CrawlerFilter implements Filter {
 				String pageName = rewritePageName(req);
 				HtmlPage page = webClient.getPage(pageName);
 //				webClient.setTimeout(10000);
-//				webClient.waitForBackgroundJavaScript(10000);
-				webClient.setAjaxController(new NicelyResynchronizingAjaxController());
+				webClient.waitForBackgroundJavaScript(10000);
+//				webClient.setAjaxController(new NicelyResynchronizingAjaxController());
 				out.println(page.asXml());
 				webClient.closeAllWindows();
 				out.close();
@@ -62,6 +61,7 @@ public class CrawlerFilter implements Filter {
 
 	private String rewritePageName(HttpServletRequest req) throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
+		sb.append("http://crawlservice.appspot.com/?key=123456&url=");
 		sb.append("http://");
 		sb.append(req.getServerName());
 		if (req.getServerPort() != 0)  {
