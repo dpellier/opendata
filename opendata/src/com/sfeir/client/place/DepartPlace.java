@@ -1,6 +1,7 @@
 package com.sfeir.client.place;
 
 import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.Prefix;
 
 public class DepartPlace extends Place {
 
@@ -17,6 +18,7 @@ public class DepartPlace extends Place {
 		return false;
 	}
 	
+	@Prefix("!DepartPlace")
 	public static class Tokenizer implements com.google.gwt.place.shared.PlaceTokenizer<DepartPlace>
 	{
 

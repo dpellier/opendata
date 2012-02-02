@@ -1,6 +1,7 @@
 package com.sfeir.client.place;
 
 import com.google.gwt.place.shared.Place;
+import com.google.gwt.place.shared.Prefix;
 
 public class VillePlace extends Place {
 
@@ -12,6 +13,7 @@ public class VillePlace extends Place {
 		this.idRegion = idRegion;
 	}
 	
+	@Prefix("!VillePlace")
 	public static class Tokenizer implements com.google.gwt.place.shared.PlaceTokenizer<VillePlace>
 	{
 
@@ -24,7 +26,7 @@ public class VillePlace extends Place {
 		@Override
 		public VillePlace getPlace(String token)
 		{
-			String[] parse = token.split("|");
+			String[] parse = token.split("\\|");
 			return new VillePlace(parse[0], parse[1]);
 		}
 
