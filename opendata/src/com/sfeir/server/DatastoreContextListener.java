@@ -49,7 +49,7 @@ public class DatastoreContextListener implements ServletContextListener {
 		String ligne = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(this.getClass()
-					.getResourceAsStream("liste_ville.txt")));
+					.getResourceAsStream("liste_ville.txt"), "UTF-8"));
 			while ((ligne = reader.readLine()) != null) {
 				String[] data = ligne.split(";");
 				villeDao.add(new Ville(data[2] + data[3] + data[4], data[11],
@@ -73,7 +73,7 @@ public class DatastoreContextListener implements ServletContextListener {
 		try {
 			String ligne;
 			reader = new BufferedReader(new InputStreamReader(this.getClass()
-					.getResourceAsStream("liste_region.txt")));
+					.getResourceAsStream("liste_region.txt"), "UTF-8"));
 			while ((ligne = reader.readLine()) != null) {
 				String[] data = ligne.split("\\t+", -1);
 				regionDao.add(new Region(data[0], data[4]));
@@ -95,7 +95,7 @@ public class DatastoreContextListener implements ServletContextListener {
 		try {
 			String ligne;
 			reader = new BufferedReader(new InputStreamReader(this.getClass()
-					.getResourceAsStream("liste_depart.txt")));
+					.getResourceAsStream("liste_depart.txt"), "UTF-8"));
 			while ((ligne = reader.readLine()) != null) {
 				String[] data = ligne.split("\\t+");
 				departDao.add(new Depart(data[1], data[5], data[0]));
