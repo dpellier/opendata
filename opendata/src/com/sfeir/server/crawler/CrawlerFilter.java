@@ -3,6 +3,8 @@ package com.sfeir.server.crawler;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.logging.Logger;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,14 +17,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.gargoylesoftware.htmlunit.BrowserVersion;
+import com.gargoylesoftware.htmlunit.TextPage;
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class CrawlerFilter implements Filter {
 
 
 	private static final String FRAGMENT = "#!";
 	private static final String ESCAPED_FRAGMENT = "_escaped_fragment_";
+	private static final Logger logger = Logger.getLogger(CrawlerFilter.class.getName());
 
 	@Override
 	public void doFilter(ServletRequest arg0, ServletResponse arg1,
@@ -34,17 +37,14 @@ public class CrawlerFilter implements Filter {
 		try {
 			String queryString = req.getQueryString();
 			if ((queryString != null) && (queryString.contains(ESCAPED_FRAGMENT))) {
-				
+						
 				ServletOutputStream out = resp.getOutputStream();
 				WebClient webClient = new WebClient(BrowserVersion.FIREFOX_3_6);
 				webClient.setThrowExceptionOnScriptError(false);
 				webClient.setJavaScriptEnabled(true);
 				String pageName = rewritePageName(req);
-				HtmlPage page = webClient.getPage(pageName);
-//				webClient.setTimeout(10000);
-				webClient.waitForBackgroundJavaScript(10000);
-//				webClient.setAjaxController(new NicelyResynchronizingAjaxController());
-				out.println(page.asXml());
+				TextPage page = webClient.getPage(pageName);
+				out.println(page.getContent());
 				webClient.closeAllWindows();
 				out.close();
 				
@@ -61,7 +61,6 @@ public class CrawlerFilter implements Filter {
 
 	private String rewritePageName(HttpServletRequest req) throws UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
-		sb.append("http://crawlservice.appspot.com/?key=123456&url=");
 		sb.append("http://");
 		sb.append(req.getServerName());
 		if (req.getServerPort() != 0)  {
@@ -69,7 +68,8 @@ public class CrawlerFilter implements Filter {
 		}
 		sb.append(req.getRequestURI());
 		sb.append(rewriteQueryString(req.getQueryString()));
-		return sb.toString();
+		String crawlerService = "http://crawlservice.appspot.com/?key=123456&url=";
+		return crawlerService + URLEncoder.encode(sb.toString());
 	}
 
 	private String rewriteQueryString(String queryString) throws UnsupportedEncodingException {
