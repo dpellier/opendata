@@ -17,7 +17,8 @@ import com.sfeir.client.place.BasicPlace;
  */
 public class Opendata implements EntryPoint {
 
-	private SimplePanel appWidget = new SimplePanel();
+ 	private SimplePanel mainPanel = new SimplePanel();
+//	private SimplePanel breadcrumbPanel = new SimplePanel();
 	private Place defaultPlace = new BasicPlace();
 
 	/**
@@ -30,7 +31,7 @@ public class Opendata implements EntryPoint {
 		ActivityMapper activityMapper = new AppActivityMapper(clientFactory);
 		ActivityManager activityManager = new ActivityManager(activityMapper,
 				clientFactory.getEventBus());
-		activityManager.setDisplay(appWidget);
+		activityManager.setDisplay(mainPanel);
 
 		// Start PlaceHistoryHandler with our PlaceHistoryMapper
 		AppPlaceHistoryMapper historyMapper = GWT
@@ -39,7 +40,9 @@ public class Opendata implements EntryPoint {
 				historyMapper);
 		historyHandler.register(clientFactory.getPlaceController(), clientFactory.getEventBus(), defaultPlace );
 
-		RootPanel.get().add(appWidget);
+		RootPanel.get().add(mainPanel);
+//		RootPanel.get("breadcrumbPanel").add(breadcrumbPanel);
+		
 		// Goes to place represented on URL or default place
 		historyHandler.handleCurrentHistory();
 	}
