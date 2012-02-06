@@ -2,24 +2,8 @@
 
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder" xmlns:gwt="urn:import:com.google.gwt.user.client.ui">
 	
-		<gwt:HTMLPanel>
-			      <div class="topbar-inner">
-			        <div class="container">
-			        	<h3><span style="color:white">Open-data</span></h3>
-			        </div>
-			  </div>
-			  <div class="container marge">
-				  <div>
-				 	 <ul class="breadcrumb">
-						<li class="active">Region</li>
-					</ul>
-				  </div>
-				  <div>
 					 <gwt:ScrollPanel>
 						<gwt:FlexTable styleName="bordered-table zebra-striped" ui:field="regions"/>
 					</gwt:ScrollPanel>
-				  </div>
-			  </div>
-		</gwt:HTMLPanel>
 		
 </ui:UiBinder>

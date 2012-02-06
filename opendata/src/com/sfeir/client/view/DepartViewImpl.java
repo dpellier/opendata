@@ -9,14 +9,12 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.client.ui.Anchor;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HTMLTable.Cell;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.sfeir.client.activity.Presenter;
-import com.sfeir.client.place.BasicPlace;
 import com.sfeir.client.place.VillePlace;
 import com.sfeir.shared.Depart;
 
@@ -30,8 +28,6 @@ public class DepartViewImpl extends Composite implements DepartView {
 
 	@UiField
 	FlexTable departements = new FlexTable();
-	@UiField
-	Anchor region;
 	private Presenter listener;
 	private String idRegion;
 	private List<Depart> departs = new ArrayList<Depart>();
@@ -52,11 +48,7 @@ public class DepartViewImpl extends Composite implements DepartView {
 
 	}
 
-	@UiHandler("region")
-	void onClickRegion(ClickEvent e) {
-		listener.goTo(new BasicPlace());
-	}
-	
+		
 	@UiHandler("departements")
 	void onClickDepartement(ClickEvent e)
 	{

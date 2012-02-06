@@ -4,6 +4,9 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.event.shared.SimpleEventBus;
 import com.google.gwt.place.shared.PlaceController;
+import com.sfeir.client.mvp.AppPlaceHistoryMapper;
+import com.sfeir.client.view.BreadcrumbView;
+import com.sfeir.client.view.BreadcrumbViewImpl;
 import com.sfeir.client.view.DepartView;
 import com.sfeir.client.view.DepartViewImpl;
 import com.sfeir.client.view.RegionView;
@@ -18,8 +21,14 @@ public class ClientFactoryImpl implements ClientFactory {
 	private static final RegionView regionView = new RegionViewImpl();
 	private static final DepartView departView = new DepartViewImpl();
 	private static final VilleView villeView = new VilleViewImpl();
+	private static final BreadcrumbView breadcrumbView = new BreadcrumbViewImpl();
 	private static final ServiceOpenDataAsync rpcService = GWT.create(ServiceOpenData.class);
+	private static final AppPlaceHistoryMapper historyMapper = GWT.create(AppPlaceHistoryMapper.class);
 	
+	public AppPlaceHistoryMapper getHistoryMapper() {
+		return historyMapper;
+	}
+
 	@Override
 	public EventBus getEventBus() {
 		return eventBus;
@@ -34,6 +43,11 @@ public class ClientFactoryImpl implements ClientFactory {
 	@Override
 	public RegionView getRegionView() {
 		return regionView;
+	}
+	
+	@Override
+	public BreadcrumbView getBreadcrumbView() {
+		return breadcrumbView;
 	}
 
 	@Override

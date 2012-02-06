@@ -4,10 +4,13 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.Prefix;
 
 public class BasicPlace extends Place {
+	
+	public static final String PREFIX = "!BasicPlace";
 
-	@Prefix("!BasicPlace")
+	@Prefix(PREFIX)
 	public static class Tokenizer implements com.google.gwt.place.shared.PlaceTokenizer<BasicPlace>
 	{
+
 
 		@Override
 		public String getToken(BasicPlace place)
@@ -20,6 +23,7 @@ public class BasicPlace extends Place {
 		{
 			return new BasicPlace();
 		}
+		
 
 	}
 }

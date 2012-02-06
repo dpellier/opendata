@@ -46,7 +46,7 @@ public class VilleActivity extends AbstractActivity implements Presenter {
 
 			@Override
 			public void onSuccess(List<Ville> result) {
-				display.setAllVille(result, idRegion);
+				display.setAllVille(result);
 			}
 
 			@Override

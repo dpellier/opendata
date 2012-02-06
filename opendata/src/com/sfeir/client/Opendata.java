@@ -8,40 +8,44 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.SimplePanel;
-import com.sfeir.client.mvp.AppActivityMapper;
+import com.sfeir.client.mvp.BreadcrumbActivityMapper;
+import com.sfeir.client.mvp.ListActivityMapper;
 import com.sfeir.client.mvp.AppPlaceHistoryMapper;
 import com.sfeir.client.place.BasicPlace;
+import com.sfeir.client.view.AppLayout;
+import com.sfeir.client.view.AppLayoutImpl;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
  */
 public class Opendata implements EntryPoint {
 
- 	private SimplePanel mainPanel = new SimplePanel();
-//	private SimplePanel breadcrumbPanel = new SimplePanel();
 	private Place defaultPlace = new BasicPlace();
 
 	/**
 	 * This is the entry point method.
 	 */
 	public void onModuleLoad() {
+		
 		ClientFactory clientFactory = GWT.create(ClientFactory.class);
+		
+		AppLayout appLayout = new AppLayoutImpl();
+		
+		// Start ActivityManager
+		BreadcrumbActivityMapper breadcrumbActivityMapper = new BreadcrumbActivityMapper(clientFactory);
+		ActivityManager breadcrumbActivityManager = new ActivityManager(breadcrumbActivityMapper, clientFactory.getEventBus());
+		breadcrumbActivityManager.setDisplay(appLayout.getBreadcrumbPanel());
 
 		// Start ActivityManager for the main widget with our ActivityMapper
-		ActivityMapper activityMapper = new AppActivityMapper(clientFactory);
-		ActivityManager activityManager = new ActivityManager(activityMapper,
-				clientFactory.getEventBus());
-		activityManager.setDisplay(mainPanel);
+		ActivityMapper listActivityMapper = new ListActivityMapper(clientFactory);
+		ActivityManager listActivityManager = new ActivityManager(listActivityMapper, clientFactory.getEventBus());
+		listActivityManager.setDisplay(appLayout.getListPanel());
 
 		// Start PlaceHistoryHandler with our PlaceHistoryMapper
-		AppPlaceHistoryMapper historyMapper = GWT
-				.create(AppPlaceHistoryMapper.class);
-		PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(
-				historyMapper);
+		PlaceHistoryHandler historyHandler = new PlaceHistoryHandler( clientFactory.getHistoryMapper());
 		historyHandler.register(clientFactory.getPlaceController(), clientFactory.getEventBus(), defaultPlace );
 
-		RootPanel.get().add(mainPanel);
-//		RootPanel.get("breadcrumbPanel").add(breadcrumbPanel);
+		RootPanel.get().add(appLayout.getMainPanel());
 		
 		// Goes to place represented on URL or default place
 		historyHandler.handleCurrentHistory();

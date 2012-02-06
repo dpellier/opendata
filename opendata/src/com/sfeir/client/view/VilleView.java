@@ -9,7 +9,7 @@ import com.sfeir.shared.Ville;
 
 public interface VilleView extends IsWidget {
 
-	void setAllVille(List<Ville> depart, String idRegion);
+	void setAllVille(List<Ville> allVilles);
 	void setPresenter(Presenter presenter);
 	int getClickedRow(ClickEvent event);
 	void clearRows();

@@ -4,6 +4,8 @@ import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.Prefix;
 
 public class VillePlace extends Place {
+	
+	public static final String PREFIX = "!VillePlace";
 
 	private String idDepart;
 	private String idRegion;
@@ -13,9 +15,10 @@ public class VillePlace extends Place {
 		this.idRegion = idRegion;
 	}
 	
-	@Prefix("!VillePlace")
+	@Prefix(PREFIX)
 	public static class Tokenizer implements com.google.gwt.place.shared.PlaceTokenizer<VillePlace>
 	{
+
 
 		@Override
 		public String getToken(VillePlace place)
@@ -29,7 +32,7 @@ public class VillePlace extends Place {
 			String[] parse = token.split("\\|");
 			return new VillePlace(parse[0], parse[1]);
 		}
-
+		
 	}
 
 	public String getIdDepart() {
