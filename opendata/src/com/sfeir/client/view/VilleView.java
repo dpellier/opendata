@@ -12,6 +12,5 @@ public interface VilleView extends IsWidget {
 	void setAllVille(List<VilleProxy> allVilles);
 	void setPresenter(Presenter presenter);
 	int getClickedRow(ClickEvent event);
-	void clearRows();
-
+	void setNbVilleMax(int nbVille);
 }

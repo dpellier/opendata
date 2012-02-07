@@ -54,10 +54,21 @@ public class Ville {
 		}
 	}
 	
-	public static long countVille() {
+	public static int countVille() {
 		EntityManager em = getEntityManager();
 		try {
-			return ((Number) em.createQuery("select count(v) from Ville v").getSingleResult()).longValue();
+			return ((Number) em.createQuery("select count(v) from Ville v where v.departId =:departId").getSingleResult()).intValue();
+		} finally {
+			em.close();
+		}
+	}
+	
+	public static int countVilleByDepartId(String departId) {
+		EntityManager em = getEntityManager();
+		try {
+			Query query = em.createQuery("select count(v) from Ville v where v.departId =:departId");
+			query.setParameter("departId", departId);
+			return ((Number) query.getSingleResult()).intValue();
 		} finally {
 			em.close();
 		}
@@ -100,14 +111,16 @@ public class Ville {
 	 * @param maxResult
 	 * @return - pour la pagination, retourne toutes les villes commencant a firstResult et se limitant a maxResult.
 	 */
-	@SuppressWarnings("unchecked")
-	public static List<Ville> findVilles(int firstResult, int maxResult) {
+	public static List<Ville> findVillesByDepartId(String departId, int firstResult, int maxResult) {
 		EntityManager em = getEntityManager();
 		try {
-			Query query = em.createQuery("select v from Ville v");
+			Query query = em.createQuery("select v from Ville v where v.departId =:departId order by v.name");
+			query.setParameter("departId", departId);
 			query.setFirstResult(firstResult);
 			query.setMaxResults(maxResult);
+			@SuppressWarnings("unchecked")
 			List<Ville> villes = query.getResultList();
+			villes.size();
 			return villes;
 		} finally {
 			em.close();

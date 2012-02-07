@@ -35,31 +35,27 @@ public class VilleActivity extends AbstractActivity implements Presenter {
 	public void start(AcceptsOneWidget containerWidget, EventBus eventBus) {
 		VilleView view = clientFactory.getVilleView();
 		view.setPresenter(this);
+		initPaging(view);
 		fetchAllVille(view);
 		containerWidget.setWidget(view.asWidget());
 	}
 	
 
 	private void fetchAllVille(final VilleView display) {
-		display.clearRows();
-		clientFactory.getRequestFactory().villeRequest().findVillesByDepartId(idDepart).fire(new Receiver<List<VilleProxy>>() {
+		clientFactory.getRequestFactory().villeRequest().findVillesByDepartId(idDepart, 0, 15).fire(new Receiver<List<VilleProxy>>() {
             @Override
             public void onSuccess(List<VilleProxy> response) {
             	display.setAllVille(response);
             }
         });
-
-		/*clientFactory.getRpcService().getAllVille(idDepart, new AsyncCallback<List<Ville>>() {
-
-			@Override
-			public void onSuccess(List<Ville> result) {
-				display.setAllVille(result);
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO a finir
-			}
-		});*/
+	}
+	
+	private void initPaging(final VilleView display) {
+		clientFactory.getRequestFactory().villeRequest().countVilleByDepartId(idDepart).fire(new Receiver<Integer>() {
+            @Override
+            public void onSuccess(Integer response) {
+            	display.setNbVilleMax(response);
+            }
+        });
 	}
 }

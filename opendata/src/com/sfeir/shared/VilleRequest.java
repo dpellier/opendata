@@ -10,7 +10,8 @@ import com.sfeir.server.domain.Ville;
 @Service(Ville.class)
 public interface VilleRequest extends RequestContext {
 
+	Request<Integer> countVilleByDepartId(String departId);
 	Request<List<VilleProxy>> findAllVilles();
-	Request<List<VilleProxy>> findVilles(int firstResult, int maxResult);
+	Request<List<VilleProxy>> findVillesByDepartId(String departId, int firstResult, int maxResult);
 	Request<List<VilleProxy>> findVillesByDepartId(String departId);
 }
