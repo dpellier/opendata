@@ -7,10 +7,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
 import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.sfeir.client.mvp.BreadcrumbActivityMapper;
 import com.sfeir.client.mvp.ListActivityMapper;
-import com.sfeir.client.mvp.AppPlaceHistoryMapper;
 import com.sfeir.client.place.BasicPlace;
 import com.sfeir.client.view.AppLayout;
 import com.sfeir.client.view.AppLayoutImpl;
@@ -44,6 +42,9 @@ public class Opendata implements EntryPoint {
 		// Start PlaceHistoryHandler with our PlaceHistoryMapper
 		PlaceHistoryHandler historyHandler = new PlaceHistoryHandler( clientFactory.getHistoryMapper());
 		historyHandler.register(clientFactory.getPlaceController(), clientFactory.getEventBus(), defaultPlace );
+		
+		// RequestFactory
+		
 
 		RootPanel.get().add(appLayout.getMainPanel());
 		

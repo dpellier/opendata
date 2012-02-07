@@ -13,6 +13,7 @@ import com.sfeir.client.view.RegionView;
 import com.sfeir.client.view.RegionViewImpl;
 import com.sfeir.client.view.VilleView;
 import com.sfeir.client.view.VilleViewImpl;
+import com.sfeir.shared.OpenDataRequestFactory;
 
 public class ClientFactoryImpl implements ClientFactory {
 
@@ -24,6 +25,12 @@ public class ClientFactoryImpl implements ClientFactory {
 	private static final BreadcrumbView breadcrumbView = new BreadcrumbViewImpl();
 	private static final ServiceOpenDataAsync rpcService = GWT.create(ServiceOpenData.class);
 	private static final AppPlaceHistoryMapper historyMapper = GWT.create(AppPlaceHistoryMapper.class);
+	private static final OpenDataRequestFactory requestFactory = instanciateRequestFactory();
+	private static OpenDataRequestFactory instanciateRequestFactory() {
+		OpenDataRequestFactory create = GWT.create(OpenDataRequestFactory.class);
+		create.initialize(eventBus);
+		return create;
+	}
 	
 	public AppPlaceHistoryMapper getHistoryMapper() {
 		return historyMapper;
