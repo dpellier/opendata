@@ -7,12 +7,9 @@ import java.io.InputStreamReader;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
-import com.sfeir.server.dao.DepartDao;
-import com.sfeir.server.dao.RegionDao;
-import com.sfeir.server.dao.VilleDao;
-import com.sfeir.shared.Depart;
-import com.sfeir.shared.Region;
-import com.sfeir.shared.Ville;
+import com.sfeir.server.domain.Depart;
+import com.sfeir.server.domain.Region;
+import com.sfeir.server.domain.Ville;
 
 /**
  * Initialisation du data store au demarrage du contexte.
@@ -22,19 +19,15 @@ import com.sfeir.shared.Ville;
  */
 public class DatastoreContextListener implements ServletContextListener {
 
-	private VilleDao villeDao = new VilleDao();
-	private DepartDao departDao = new DepartDao();
-	private RegionDao regionDao = new RegionDao();
-
 	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
-		if (regionDao.ofy().query(Region.class).count() == 0) {
+		if (Region.countRegion() == 0) {
 			parseFichierRegion();
 		}
-		if (departDao.ofy().query(Depart.class).count() == 0) {
+		if (Depart.countDepart() == 0) {
 			parseFichierDepart();
 		}
-		if (villeDao.ofy().query(Ville.class).count() == 0) {
+		if (Ville.countVille() == 0) {
 			parseFichierVille();
 		}
 	}
@@ -48,12 +41,15 @@ public class DatastoreContextListener implements ServletContextListener {
 		BufferedReader reader = null;
 		String ligne = null;
 		try {
-			reader = new BufferedReader(new InputStreamReader(this.getClass()
-					.getResourceAsStream("liste_ville.txt"), "UTF-8"));
+			reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("liste_ville.txt"), "UTF-8"));
 			while ((ligne = reader.readLine()) != null) {
 				String[] data = ligne.split(";");
-				villeDao.add(new Ville(data[2] + data[3] + data[4], data[11],
-						data[3]));
+				Ville t = new Ville();
+				t.setId(data[2] + data[3] + data[4]);
+				t.setName(data[11]);
+				t.setDepartId(data[3]);
+				t.setVersion(1);
+				t.persist();
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(
@@ -72,11 +68,14 @@ public class DatastoreContextListener implements ServletContextListener {
 		BufferedReader reader = null;
 		try {
 			String ligne;
-			reader = new BufferedReader(new InputStreamReader(this.getClass()
-					.getResourceAsStream("liste_region.txt"), "UTF-8"));
+			reader = new BufferedReader(new InputStreamReader(this.getClass().getResourceAsStream("liste_region.txt"), "UTF-8"));
 			while ((ligne = reader.readLine()) != null) {
 				String[] data = ligne.split("\\t+", -1);
-				regionDao.add(new Region(data[0], data[4]));
+				Region r = new Region();
+				r.setId(data[0]);
+				r.setVersion(1);
+				r.setName(data[4]);
+				r.persist();
 			}
 		} catch (IOException e) {
 			throw new RuntimeException(e);
@@ -98,7 +97,11 @@ public class DatastoreContextListener implements ServletContextListener {
 					.getResourceAsStream("liste_depart.txt"), "UTF-8"));
 			while ((ligne = reader.readLine()) != null) {
 				String[] data = ligne.split("\\t+");
-				departDao.add(new Depart(data[1], data[5], data[0]));
+				Depart d = new Depart();
+				d.setId(data[1]);
+				d.setName(data[5]);
+				d.setRegionId(data[0]);
+				d.persist();
 			}
 		} catch (IOException e) {
 			throw new RuntimeException(e);

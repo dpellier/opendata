@@ -16,7 +16,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.sfeir.client.activity.Presenter;
 import com.sfeir.client.place.VillePlace;
-import com.sfeir.shared.Depart;
+import com.sfeir.shared.DepartProxy;
 
 public class DepartViewImpl extends Composite implements DepartView {
 
@@ -30,14 +30,14 @@ public class DepartViewImpl extends Composite implements DepartView {
 	FlexTable departements = new FlexTable();
 	private Presenter listener;
 	private String idRegion;
-	private List<Depart> departs = new ArrayList<Depart>();
+	private List<DepartProxy> departs = new ArrayList<DepartProxy>();
 
 	public DepartViewImpl() {
 		initWidget(binder.createAndBindUi(this));
 	}
 
 	@Override
-	public void setAllDepart(List<Depart> departList, String idRegion) {
+	public void setAllDepart(List<DepartProxy> departList, String idRegion) {
 		departs = departList;
 		this.idRegion = idRegion;
 		for (int index = 0; index < departList.size(); index++) {
@@ -52,7 +52,7 @@ public class DepartViewImpl extends Composite implements DepartView {
 	@UiHandler("departements")
 	void onClickDepartement(ClickEvent e)
 	{
-		Depart depart = departs.get(getClickedRow(e));
+		DepartProxy depart = departs.get(getClickedRow(e));
 		listener.goTo(new VillePlace(depart.getId(), idRegion));
 	}
 

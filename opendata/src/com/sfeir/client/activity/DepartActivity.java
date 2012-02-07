@@ -5,12 +5,12 @@ import java.util.List;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.sfeir.client.ClientFactory;
 import com.sfeir.client.place.DepartPlace;
 import com.sfeir.client.view.DepartView;
-import com.sfeir.shared.Depart;
+import com.sfeir.shared.DepartProxy;
 
 public class DepartActivity extends AbstractActivity implements Presenter {
 	
@@ -39,18 +39,12 @@ public class DepartActivity extends AbstractActivity implements Presenter {
 	
 
 	private void fetchAllDepart(final DepartView display) {
-		clientFactory.getRpcService().getAllDepart(idRegion, new AsyncCallback<List<Depart>>() {
-
-			@Override
-			public void onSuccess(List<Depart> result) {
-				display.setAllDepart(result, idRegion);
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO a finir
-			}
-		});
+		clientFactory.getRequestFactory().departRequest().findDepartsByRegionId(idRegion).fire(new Receiver<List<DepartProxy>>() {
+            @Override
+            public void onSuccess(List<DepartProxy> response) {
+            	display.setAllDepart(response, idRegion);
+            }
+        });
 	}
 
 }

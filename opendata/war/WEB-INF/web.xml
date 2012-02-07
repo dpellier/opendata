@@ -17,16 +17,6 @@
 
   <!-- Servlets -->
   <servlet>
-    <servlet-name>serviceServlet</servlet-name>
-    <servlet-class>com.sfeir.server.ServiceOpenDataImpl</servlet-class>
-  </servlet>
-  
-  <servlet-mapping>
-    <servlet-name>serviceServlet</servlet-name>
-    <url-pattern>/opendata/service</url-pattern>
-  </servlet-mapping>
-  
-  <servlet>
 	<servlet-name>requestFactoryServlet</servlet-name>
 	<servlet-class>com.google.web.bindery.requestfactory.server.RequestFactoryServlet</servlet-class>
 	<init-param>

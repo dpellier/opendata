@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.sfeir.client.activity.Presenter;
 import com.sfeir.client.place.DepartPlace;
-import com.sfeir.shared.Region;
+import com.sfeir.shared.RegionProxy;
 
 public class RegionViewImpl extends Composite implements
 		RegionView {
@@ -29,7 +29,7 @@ public class RegionViewImpl extends Composite implements
 	@UiField
 	FlexTable regions = new FlexTable();
 	private Presenter listener;
-	private List<Region> regionList;
+	private List<RegionProxy> regionList;
 	
 
 	public RegionViewImpl() {
@@ -37,7 +37,7 @@ public class RegionViewImpl extends Composite implements
 	}
 
 	@Override
-	public void setAllRegion(List<Region> regionList) {
+	public void setAllRegion(List<RegionProxy> regionList) {
 		this.regionList = regionList;
 		regions.removeAllRows();
 		for (int index = 0; index < regionList.size(); index++) {
@@ -50,7 +50,7 @@ public class RegionViewImpl extends Composite implements
 	@UiHandler("regions")
 	void onClickRegion(ClickEvent e)
 	{
-		Region region = regionList.get(getClickedRow(e));
+		RegionProxy region = regionList.get(getClickedRow(e));
 		listener.goTo(new DepartPlace(region.getId()));
 	}
 	

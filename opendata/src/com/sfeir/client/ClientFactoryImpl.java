@@ -23,9 +23,9 @@ public class ClientFactoryImpl implements ClientFactory {
 	private static final DepartView departView = new DepartViewImpl();
 	private static final VilleView villeView = new VilleViewImpl();
 	private static final BreadcrumbView breadcrumbView = new BreadcrumbViewImpl();
-	private static final ServiceOpenDataAsync rpcService = GWT.create(ServiceOpenData.class);
 	private static final AppPlaceHistoryMapper historyMapper = GWT.create(AppPlaceHistoryMapper.class);
 	private static final OpenDataRequestFactory requestFactory = instanciateRequestFactory();
+	
 	private static OpenDataRequestFactory instanciateRequestFactory() {
 		OpenDataRequestFactory create = GWT.create(OpenDataRequestFactory.class);
 		create.initialize(eventBus);
@@ -61,16 +61,14 @@ public class ClientFactoryImpl implements ClientFactory {
 	public DepartView getDepartView() {
 		return departView;
 	}
-
-	@Override
-	public ServiceOpenDataAsync getRpcService() {
-		return rpcService;
-	}
 	
 	@Override
 	public VilleView getVilleView() {
 		return villeView;
 	}
 
-	
+	@Override
+	public OpenDataRequestFactory getRequestFactory() {
+		return requestFactory;
+	}
 }

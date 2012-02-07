@@ -11,5 +11,7 @@ import com.google.web.bindery.requestfactory.shared.RequestFactory;
 public interface OpenDataRequestFactory extends RequestFactory {
 
 	/** Return a request selector */
-	TownRequest townRequest();
+	VilleRequest villeRequest();
+	DepartRequest departRequest();
+	RegionRequest regionRequest();
 }

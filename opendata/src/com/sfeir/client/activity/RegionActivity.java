@@ -5,11 +5,11 @@ import java.util.List;
 import com.google.gwt.activity.shared.AbstractActivity;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
-import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.web.bindery.requestfactory.shared.Receiver;
 import com.sfeir.client.ClientFactory;
 import com.sfeir.client.view.RegionView;
-import com.sfeir.shared.Region;
+import com.sfeir.shared.RegionProxy;
 
 public class RegionActivity extends AbstractActivity implements Presenter {
 
@@ -37,19 +37,12 @@ public class RegionActivity extends AbstractActivity implements Presenter {
 	}
 
 	private void fetchAllRegion(final RegionView display) {
-		clientFactory.getRpcService().getAllRegion(new AsyncCallback<List<Region>>() {
-
-			@Override
-			public void onSuccess(List<Region> result) {
-				display.setAllRegion(result);
-			}
-
-			@Override
-			public void onFailure(Throwable caught) {
-				// TODO a finir
-			}
-		});
+		clientFactory.getRequestFactory().regionRequest().findAllRegions().fire(new Receiver<List<RegionProxy>>() {
+            @Override
+            public void onSuccess(List<RegionProxy> response) {
+            	display.setAllRegion(response);
+            }
+        });
 	}
-
 
 }

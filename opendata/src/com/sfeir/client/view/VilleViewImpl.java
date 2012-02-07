@@ -8,82 +8,54 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiTemplate;
-import com.google.gwt.user.cellview.client.CellTable;
-import com.google.gwt.user.cellview.client.SimplePager;
-import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
-import com.google.gwt.user.cellview.client.TextColumn;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.Panel;
 import com.sfeir.client.activity.Presenter;
-import com.sfeir.shared.Ville;
+import com.sfeir.shared.VilleProxy;
 
 public class VilleViewImpl extends Composite implements VilleView {
 
 	@UiTemplate("Ville.ui.xml")
 	interface MyUiBinder extends UiBinder<Panel, VilleViewImpl> {
 	};
+
 	private static final MyUiBinder binder = GWT.create(MyUiBinder.class);
 
 	@UiField
-	CellTable<String> villes = defineTable();
-	@UiField(provided=true)
-	SimplePager pager;
+	FlexTable villes = new FlexTable();
 	private Presenter listener;
-	private List<Ville> listVilles = new ArrayList<Ville>();
+	private List<VilleProxy> listVilles = new ArrayList<VilleProxy>();
 
 	public VilleViewImpl() {
-		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
-		pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
-		pager.setDisplay(villes);
 		initWidget(binder.createAndBindUi(this));
-	}
-	
-	
-
-	/**
-	 * Instancie et configure la table
-	 * @return
-	 */
-	private CellTable<String> defineTable() {
-		TextColumn<String> nameColumn = new TextColumn<String>() {
-			@Override
-			public String getValue(String object) {
-				return object;
-			}
-		};
-		CellTable<String> table = new CellTable<String>(10);
-		table.addColumn(nameColumn);
-		return table;
 	}
 
 	@Override
-	public void setAllVille(List<Ville> villeList) {
+	public void setAllVille(List<VilleProxy> villeList) {
 		listVilles = villeList;
 		for (int index = 0; index < villeList.size(); index++) {
 			Label label = new Label(villeList.get(index).getName());
 			label.setStyleName("pointer");
-//			villes.setWidget(index, 1, label);
-			// TODO refaire
+			villes.setWidget(index, 1, label);
 		}
 
 	}
 
 	@Override
 	public int getClickedRow(ClickEvent event) {
-//		Cell row = villes.getCellForEvent(event);
-//		return row.getRowIndex();
-		// TODO refaire
+		//Cell row = villes.getCellForEvent(event);
+		//return row.getRowIndex();
 		return 0;
 	}
 
 	public void setPresenter(Presenter presenter) {
 		this.listener = presenter;
 	}
-	
+
 	public void clearRows() {
-//		villes.removeAllRows();
-		// TODO refaire
+		villes.removeAllRows();
 	}
 
 }
