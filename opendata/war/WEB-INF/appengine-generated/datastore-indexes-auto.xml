@@ -1,0 +1,17 @@
+<!-- Indices written at Tue, 7 Feb 2012 14:00:04 UTC -->
+
+<datastore-indexes>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Depart" ancestor="false" source="auto">
+        <property name="regionId" direction="asc"/>
+        <property name="name" direction="asc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Ville" ancestor="false" source="auto">
+        <property name="departId" direction="asc"/>
+        <property name="name" direction="asc"/>
+    </datastore-index>
+
+</datastore-indexes>

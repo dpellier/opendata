@@ -1,0 +1,2 @@
+serviceClass: com.sfeir.client.ServiceOpenData
+path: CB4DE09B1F733DDE5E99DAA90C959D4B.gwt.rpc
